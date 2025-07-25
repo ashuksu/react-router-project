@@ -1,6 +1,6 @@
 import {isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration} from "react-router";
-
 import type {Route} from "./+types/root";
+import Header from "~/components/Header";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -26,10 +26,7 @@ export function Layout({children}: { children: React.ReactNode }) {
             <Links/>
         </head>
         <body>
-        <nav className="p-4 bg-gray-800 text-gray-300-600 flex justify-center space-x-4">
-            <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/about" className="hover:underline">About</Link>
-        </nav>
+        <Header/>
         {children}
         <ScrollRestoration/>
         <Scripts/>
