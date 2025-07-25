@@ -1,18 +1,59 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button} from "~/components/Button";
 
 interface TimeEntryBlockProps {
 }
 
+const formatTime = (totalSeconds: number): string => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+};
+
 export function TimeEntryBlock({}: TimeEntryBlockProps) {
+    const [seconds, setSeconds] = useState<number>(0);
+    const [isRunning, setIsRunning] = useState<boolean>(false);
+    const intervalRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        if (isRunning) {
+            intervalRef.current = window.setInterval(() => {
+                setSeconds(prevSeconds => prevSeconds + 1);
+            }, 1000);
+        } else {
+            if (intervalRef.current) {
+                window.clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+        }
+
+        return () => {
+            if (intervalRef.current) {
+                window.clearInterval(intervalRef.current);
+            }
+        };
+    }, [isRunning]);
+
+    const handleStartPause: React.MouseEventHandler<HTMLButtonElement> = () => {
+        setIsRunning(prevIsRunning => !prevIsRunning);
+    };
+
     return (
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-4">
             <div className="flex justify-between space-x-4 mb-4">
                 <div className="flex items-stretch justify-between space-x-4">
-                    <Button className="bg-blue-600 hover:bg-blue-700">
-                        Start/Pause
+                    <Button
+                        className={isRunning ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-blue-600 hover:bg-blue-700'}
+                        onClick={handleStartPause}
+                    >
+                        {isRunning ? 'Pause' : 'Start'}
                     </Button>
-                    <div className="flex items-center text-3xl font-mono">00:00:00</div>
+                    <div className="flex items-center text-3xl font-mono">
+                        {formatTime(seconds)}
+                    </div>
                     <input
                         id="projectId"
                         type="text"
