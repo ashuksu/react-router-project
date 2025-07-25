@@ -16,9 +16,14 @@ export default function Home() {
         <Main>
             <Container>
                 <TimeEntryBlock/>
-                <Button className="bg-green-600 hover:bg-green-700">
-                    Add New Block
-                </Button>
+                <div className="flex items-center justify-between space-x-4">
+                    <Button className="bg-purple-600 hover:bg-purple-700">
+                        Add New Block
+                    </Button>
+                    <Button className="bg-green-600 hover:bg-green-700">
+                        Save All
+                    </Button>
+                </div>
             </Container>
         </Main>
     );
