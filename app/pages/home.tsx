@@ -1,13 +1,25 @@
 import type {Route} from "./+types/home";
-import {Welcome} from "~/components/welcome/welcome";
+import {Main} from "~/components/Main";
+import {Container} from "~/components/Container";
+import {TimeEntryBlock} from "~/components/TimeEntryBlock";
+import {Button} from "~/components/Button";
 
 export function meta({}: Route.MetaArgs) {
     return [
-        {title: "New React Router App"},
-        {name: "description", content: "Welcome to React Router!"},
+        {title: "Work Log App"},
+        {name: "description", content: "Track your work time efficiently."},
     ];
 }
 
 export default function Home() {
-    return <Welcome/>;
+    return (
+        <Main>
+            <Container>
+                <TimeEntryBlock/>
+                <Button className="bg-green-600 hover:bg-green-700">
+                    Add New Block
+                </Button>
+            </Container>
+        </Main>
+    );
 }
