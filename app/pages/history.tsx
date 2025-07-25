@@ -1,6 +1,13 @@
+import type {Route} from "./+types/history";
 import {Main} from "~/components/Main";
 import {Container} from "~/components/Container";
 
+export function meta({}: Route.MetaArgs) {
+    return [
+        {title: "Work Log History"},
+        {name: "description", content: "Change your working time."},
+    ];
+}
 export default function History() {
     return (
         <Main>

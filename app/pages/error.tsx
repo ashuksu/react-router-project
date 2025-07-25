@@ -1,6 +1,13 @@
+import type {Route} from "./+types/error";
 import {Main} from "~/components/Main";
 import {Container} from "~/components/Container";
 
+export function meta({}: Route.MetaArgs) {
+    return [
+        {title: "Error 404"},
+        {name: "description", content: "No pages found."},
+    ];
+}
 export default function Error() {
     return (
         <Main>
